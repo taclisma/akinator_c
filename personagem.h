@@ -9,17 +9,24 @@
 
 typedef struct monstro{
     char nome[20];
-    int mortovivo;
-    int pele;
+    int prop[6];
 } monstro;
 
-monstro *createchar(char nome[20], int m, int p){
+monstro *createchar(char nome[20], int arr[]){
+    int i;
     monstro *novo = malloc(sizeof(monstro));
+
+    // inicia array com -1
+    for(i=0; i < 6; i++) {
+        novo->prop[i] = -1;
+    }
+
 
     if(novo != NULL){
         strcpy(novo->nome, nome);
-        novo->mortovivo =m;
-        novo->pele =p;
+        for(i=0; i < 6; i++) {
+            novo->prop[i] = arr[i];
+        }
     }
     return novo;
 }

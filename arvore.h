@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include "personagem.h"
 
 typedef struct treenode {
-
-    int persindex; 
+    
+    monstro mons; 
     struct treenode *left;
     struct treenode *right;
     
@@ -38,6 +38,16 @@ void walktree(treenode * root){
     walktree(root->left);
     printf("right:");
     walktree(root->right);
+}
+
+void answer(treenode * root, int i){ //onde i é indice da propiedade
+    if (root == NULL){ // se mons->nome vazio? mas node nem existe??
+        printf("fim\n");
+        return;
+    }
+
+    if (prop[i] == 1) walktree(root->left);
+    if (prop[i] == 0) walktree(root->right);
 }
 
 
