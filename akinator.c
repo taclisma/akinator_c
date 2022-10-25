@@ -1,43 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "arvore.h"
-#include "personagem.h"
-#define TAM 6
 
 
 void initarr(int arr[]){
     int i;
-    for(i=0; i < TAM; i++) {
+    for(i=0; i < 6; i++) {
         arr[i] = -1;
     }
 }
 
 int main(){
-    int i = 0, j = 0;
-    int auxArr[TAM];
-    monstro auxcpy;
-    monstro *p[10] = {NULL};
-    initarr(auxArr);
-    auxArr[0] = 1; auxArr[1] = 1;
-    p[0] = createchar("zumbi", auxArr);
-    auxArr[1] = 0;
-    p[1] = createchar("esqueleto", auxArr); //{1, 0}
-    auxArr[0] = 0; auxArr[1] = 1;
-    p[2] = createchar("lobisomem", auxArr); //{0, 1}
-    //p[3] = createchar("vampiro", 1, 1);
+    treenode * root = NULL;
+    treenode * aux = NULL;
 
-    while (p[i] != NULL){
-        printf("%s\n", p[i]->nome);
-        while(j < TAM){
-            printf("%i, ", p[i]->prop[j]);
-            j++;
-        }
-        j = 0;
-        i++;
-        printf("\n");
+    root = createnode("é morto vivo", false);
+    aux = createnode("zumbi", true);
+    aux->root = root;
+    root->left = aux;
+    aux = createnode("lobisomen", true);
+    root->right = aux;
+    aux->root = root;
 
+    while (true){
+        printf("pense em um monstro\n\tcomeçar");
+        getchar();
+        walktree(root);
     }
-    
 
-return 0;
+
+    return 0;
 }
