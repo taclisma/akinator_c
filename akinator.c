@@ -14,6 +14,7 @@ int main(){
     treenode * root = NULL;
     treenode * aux = NULL;
 
+    //inicialização manual da arvore
     root = createnode("é morto vivo", false);
     aux = createnode("zumbi", true);
     aux->root = root;
@@ -23,11 +24,17 @@ int main(){
     aux->root = root;
 
     while (true){
-        printf("pense em um monstro\n\tcomeçar");
-        getchar();
+        printf("pense em um monstro \n\tcomeçar");
+        gets();
         walktree(root);
     }
 
 
     return 0;
 }
+
+
+// referencias:
+//      https://www.youtube.com/watch?v=UbhlOk7vjVY
+//      https://www.youtube.com/watch?v=hfwwaNNJ-0A
+//      https://github.com/ajlekcahdp4/Akinator     

@@ -5,19 +5,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
-typedef struct treenode { // pergunta = 0/false resp = 1/true
+typedef struct treenode { 
     
-    char string[30]; 
+    char string[30]; // pode ser tanto pergunta quanto resposta
     struct treenode *left;
     struct treenode *right;
-    struct treenode *root; // p voltar e criar novo nó
-    bool tipo;
-    
+    struct treenode *root; // para facilitar voltar e criar novo nó de pergunta
+    bool tipo; // pergunta = 0/false resp = 1/true 
     
 } treenode;
 
-//cria no
+// cria nó
 treenode *createnode(char s[], bool b){
     treenode* novo = malloc(sizeof(treenode));
 
@@ -78,14 +78,15 @@ bool walktree(treenode * root){
         scanf("%c", &resp);gets();
 
         if(resp == 's'){
-            printf("acertei\n");
+            printf("acertei\n\n\n");
             return(true);
         } else if(resp == 'n') {
             printf("errei, em que mostro voce estava pensando?\n>");
             scanf(" %[^\n]s", &strn);gets();
             printf("e qual a diferença entre %s e %s?\n>", root->string, strn);
             scanf(" %[^\n]s", &strq);gets();
-            insertnode(root, strq, strn); 
+            insertnode(root, strq, strn);
+            printf("\n\n");
 
         }
     }
