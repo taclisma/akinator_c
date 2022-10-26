@@ -3,13 +3,6 @@
 #include "arvore.h"
 
 
-void initarr(int arr[]){
-    int i;
-    for(i=0; i < 6; i++) {
-        arr[i] = -1;
-    }
-}
-
 int main(){
     treenode * root = NULL;
     treenode * aux = NULL;
@@ -23,9 +16,10 @@ int main(){
     root->right = aux;
     aux->root = root;
 
+    // 
     while (true){
         printf("pense em um monstro \n\tcomeçar");
-        gets();
+        getchar();
         walktree(root);
     }
 
