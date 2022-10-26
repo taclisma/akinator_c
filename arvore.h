@@ -12,14 +12,14 @@ typedef struct treenode {
     char string[30]; // pode ser tanto pergunta quanto resposta
     struct treenode *left;
     struct treenode *right;
-    struct treenode *root; // para facilitar voltar e criar novo nó de pergunta
+    struct treenode *root; // para facilitar voltar e criar novo nÃ³ de pergunta
     bool tipo; // pergunta = 0/false resp = 1/true 
     
 } treenode;
 
-// cria nó
+// cria nÃ³
 treenode *createnode(char s[], bool b){
-    treenode* novo = malloc(sizeof(treenode));
+    treenode* novo = (treenode*) malloc(sizeof(treenode));
 
     if (novo != NULL){
         strcpy(novo->string, s);
@@ -34,11 +34,11 @@ treenode *createnode(char s[], bool b){
 
 
 bool insertnode(treenode *rootptr, char q[], char m[]){
-    treenode *up = rootptr->root; // nó de pergunta antes de folha
+    treenode *up = rootptr->root; // nÃ³ de pergunta antes de folha
     treenode *aux;
 
 
-    if(up->left == rootptr){ // se o nó da esquerda é o nó da folha que deu a resp errada
+    if(up->left == rootptr){ // se o nÃ³ da esquerda Ã© o nÃ³ da folha que deu a resp errada
         aux = createnode(q, false);
         up->left = aux;
         aux->left = rootptr;
@@ -65,7 +65,7 @@ bool walktree(treenode * root){
 
     if(root->tipo == false){
         printf("%s ?\n\t s para sim e n para nao\n>", root->string);
-        scanf("%c", &resp);gets();
+        scanf("%c", &resp);getchar();
 
         if (resp == 's'){
             walktree(root->left);
@@ -75,16 +75,16 @@ bool walktree(treenode * root){
 
     } else {
         printf("voce estava pensando em %s ?\n\t s para sim e n para nao\n>", root->string);
-        scanf("%c", &resp);gets();
+        scanf("%c", &resp);getchar();
 
         if(resp == 's'){
             printf("acertei\n\n\n");
             return(true);
         } else if(resp == 'n') {
             printf("errei, em que mostro voce estava pensando?\n>");
-            scanf(" %[^\n]s", &strn);gets();
-            printf("e qual a diferença entre %s e %s?\n>", root->string, strn);
-            scanf(" %[^\n]s", &strq);gets();
+            scanf(" %[^\n]s", &strn);getchar();
+            printf("e qual a diferenÃ§a entre %s e %s?\n>", root->string, strn);
+            scanf(" %[^\n]s", &strq);getchar();
             insertnode(root, strq, strn);
             printf("\n\n");
 
