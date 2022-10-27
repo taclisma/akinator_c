@@ -12,12 +12,12 @@ typedef struct treenode {
     char string[30]; // pode ser tanto pergunta quanto resposta
     struct treenode *left;
     struct treenode *right;
-    struct treenode *root; // para facilitar voltar e criar novo nÃ³ de pergunta
+    struct treenode *root; // para facilitar voltar e criar novo no de pergunta
     bool tipo; // pergunta = 0/false resp = 1/true 
     
 } treenode;
 
-// cria nÃ³
+// cria no
 treenode *createnode(char s[], bool b){
     treenode* novo = (treenode*) malloc(sizeof(treenode));
 
@@ -33,31 +33,27 @@ treenode *createnode(char s[], bool b){
 }
 
 
-bool insertnode(treenode *rootptr, char q[], char m[]){
-    treenode *up = rootptr->root; // nÃ³ de pergunta antes de folha
-    treenode *aux;
+bool insertnode(treenode *subtreeroot, char q[], char m[]){
+    treenode *up = subtreeroot->root; // no de pergunta antes de folha
+    treenode *perg;
 
-
-    if(up->left == rootptr){ // se o nÃ³ da esquerda Ã© o nÃ³ da folha que deu a resp errada
-        aux = createnode(q, false);
-        up->left = aux;
-        aux->left = rootptr;
-        aux->right = createnode(m, true);
-        aux->root = up;
-        rootptr->root = aux;
-    } else {
-        aux = createnode(q, false);
-        up->right = aux;
-        aux->left = rootptr;
-        aux->right = createnode(m, true);
-        aux->root = up;
-        rootptr->root = aux;
-    }
+    // o problema de segmentation fault descoberto em aula 
+    // se dava por nao adicionar o caminho de volta para o nó da direita. 
     
+    // cria novo nó de pergunta
+    perg = createnode(q, false);        
+    // coloca como o novo caminho
+    if(up->left == subtreeroot) up->left = perg; 
+    else up->right = perg;
+    perg->left = subtreeroot;           // resp sim
+    perg->right = createnode(m, true);  // resp nao
+    perg->root = up;                    // aponta up como nova raiz da subarvore
+    subtreeroot->root = perg;           // aponta perg (pergunta) como nova raiz da subarvore
+    perg->right->root = perg;           // aponta up como nova raiz da subarvore
 
 }
 
-
+// jogo
 bool walktree(treenode * root){
     char resp = '0';
     char strn[30];
@@ -81,15 +77,50 @@ bool walktree(treenode * root){
             printf("acertei\n\n\n");
             return(true);
         } else if(resp == 'n') {
-            printf("errei, em que mostro voce estava pensando?\n>");
-            scanf(" %[^\n]s", &strn);getchar();
-            printf("e qual a diferenÃ§a entre %s e %s?\n>", root->string, strn);
-            scanf(" %[^\n]s", &strq);getchar();
+            printf("no que voce estava pensando?\n>");
+            scanf("%[A-Z a-z]s", &strn);getchar();
+            fflush (stdin);
+
+            printf("e qual a diferenca entre %s e %s?\n>", root->string, strn);
+            scanf("%[A-Z a-z]s", &strq);getchar();
+            fflush (stdin);
+
             insertnode(root, strq, strn);
             printf("\n\n");
 
         }
     }
+
+}
+
+
+
+
+// funções p achar o problema 
+void tab(int n){
+    int i;
+    for(i = 0; i < n; i++) printf("    ");
+}
+
+void printa(treenode * root, int lvl){
+    if (root == NULL) {tab(lvl); printf("fim\n"); return;}
+
+    tab(lvl);
+    printf("anterior: %s || ", root->root->string);
+    printf("item: %s \n", root->string);
+
+
+    tab(lvl);
+    printf("left: \n");
+
+    printa(root->left, lvl++);
+    tab(lvl);
+    
+    printf("right: \n");
+    printa(root->right, lvl++);
+    tab(lvl);
+    printf("acabou\n");
+
 
 }
 
